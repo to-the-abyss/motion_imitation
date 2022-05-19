@@ -10,6 +10,9 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 os.sys.path.insert(0, parentdir)
 
+"""
+absl ...
+"""
 from absl import app
 from absl import flags
 import scipy.interpolate
@@ -71,6 +74,9 @@ _DUTY_FACTOR = [0.6] * 4
 _INIT_PHASE_FULL_CYCLE = [0.9, 0, 0, 0.9]
 _MAX_TIME_SECONDS = 50
 
+"""
+alternate swing and stance
+"""
 _INIT_LEG_STATE = (
     gait_generator_lib.LegState.SWING,
     gait_generator_lib.LegState.STANCE,
@@ -79,7 +85,9 @@ _INIT_LEG_STATE = (
 )
 
 
-
+"""
+MPC_VELOCITY_MULTIPLIER = 0.5 here
+"""
 
 def _generate_example_linear_angular_speed(t):
   """Creates an example speed profile based on time for demo purpose."""
@@ -88,7 +96,7 @@ def _generate_example_linear_angular_speed(t):
   wz = 0.8 * robot_sim.MPC_VELOCITY_MULTIPLIER
   
   time_points = (0, 5, 10, 15, 20, 25,30)
-  speed_points = ((0, 0, 0, 0), (0, 0, 0, wz), (vx, 0, 0, 0), (0, 0, 0, -wz), (0, -vy, 0, 0),
+  speed_points = ((0, 0, 0, 0), (vx, 0, 0, wz), (vx, 0, 0, 0), (0, 0, 0, -wz), (0, -vy, 0, 0),
                   (0, 0, 0, 0), (0, 0, 0, wz))
 
   speed = scipy.interpolate.interp1d(
@@ -98,7 +106,7 @@ def _generate_example_linear_angular_speed(t):
       fill_value="extrapolate",
       axis=0)(
           t)
-
+  print(speed)
   return speed[0:3], speed[3]
 
 
